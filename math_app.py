@@ -20,7 +20,6 @@ def generate_new_problem():
     st.session_state.operation = random.choice(["*", "/"])
     st.session_state.feedback = ""
     st.session_state.user_answer = ""
-    st.experimental_rerun()  # Force re-render to refresh inputs
 
 # Display the problem
 number1 = st.session_state.number1
@@ -66,6 +65,8 @@ st.markdown(
 )
 
 # Button to continue to the next problem
-if st.session_state.feedback == "Well done! 🎉" and st.button("Next Problem"):
-    generate_new_problem()
-
+if st.session_state.feedback == "Well done! 🎉":
+    if st.button("Next Problem"):
+        generate_new_problem()
+        # Refresh UI without rerun by simply clearing feedback
+        st.experimental_set_query_params()
