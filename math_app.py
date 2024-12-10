@@ -41,17 +41,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Input form for the kid's answer
-with st.form(key="answer_form"):
-    st.session_state.user_answer = st.text_input(
-        "Enter your answer:", value=st.session_state.user_answer
-    )
-    submit_button = st.form_submit_button("Submit")
+# Input for the kid's answer
+user_answer = st.text_input("Enter your answer:", st.session_state.user_answer)
 
 # Check the answer
-if submit_button:
-    if st.session_state.user_answer.isdigit():
-        if int(st.session_state.user_answer) == correct_answer:
+if st.button("Submit"):
+    if user_answer.isdigit():
+        if int(user_answer) == correct_answer:
             st.session_state.feedback = "Well done! 🎉"
         else:
             st.session_state.feedback = "Try again! ❌"
@@ -65,8 +61,5 @@ st.markdown(
 )
 
 # Button to continue to the next problem
-if st.session_state.feedback == "Well done! 🎉":
-    if st.button("Next Problem"):
-        generate_new_problem()
-        # Refresh UI without rerun by simply clearing feedback
-        st.experimental_set_query_params()
+if st.session_state.feedback == "Well done! 🎉" and st.button("Next Problem"):
+    generate_new_problem()
