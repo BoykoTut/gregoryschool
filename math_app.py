@@ -10,6 +10,8 @@ if "operation" not in st.session_state:
     st.session_state.operation = random.choice(["*", "/"])
 if "feedback" not in st.session_state:
     st.session_state.feedback = ""
+if "user_answer" not in st.session_state:
+    st.session_state.user_answer = ""
 
 # Function to generate new problem
 def generate_new_problem():
@@ -17,6 +19,7 @@ def generate_new_problem():
     st.session_state.number2 = random.randint(1, 10)
     st.session_state.operation = random.choice(["*", "/"])
     st.session_state.feedback = ""
+    st.session_state.user_answer = ""
 
 # Display the problem
 number1 = st.session_state.number1
@@ -30,10 +33,16 @@ elif operation == "/":
     correct_answer = number1
     number1 = number1 * number2  # Adjust to make division clean
 
-st.write(f"**Solve this problem:** {number1} {operation} {number2} = ?")
+st.markdown(
+    f"<h1 style='font-size: 36px;'>Solve this problem:</h1>", unsafe_allow_html=True
+)
+st.markdown(
+    f"<h2 style='font-size: 32px; color: blue;'>{number1} {operation} {number2} = ?</h2>",
+    unsafe_allow_html=True,
+)
 
 # Input for the kid's answer
-user_answer = st.text_input("Enter your answer:", "")
+user_answer = st.text_input("Enter your answer:", st.session_state.user_answer)
 
 # Check the answer
 if st.button("Submit"):
@@ -46,8 +55,11 @@ if st.button("Submit"):
         st.session_state.feedback = "Please enter a valid number."
 
 # Display feedback
-st.write(st.session_state.feedback)
+st.markdown(
+    f"<h3 style='font-size: 28px; color: green;'>{st.session_state.feedback}</h3>",
+    unsafe_allow_html=True,
+)
 
 # Button to continue to the next problem
-if st.session_state.feedback == "Well done! 🎉" and st.button("Next Problem"):
+if st.session_state.feedback == "Well done! 🎉" and st.button("Next!"):
     generate_new_problem()
