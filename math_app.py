@@ -20,7 +20,6 @@ def generate_new_problem():
     st.session_state.operation = random.choice(["*", "/"])
     st.session_state.feedback = ""
     st.session_state.user_answer = ""
-    st.experimental_rerun()
 
 # Display the problem
 number1 = st.session_state.number1
@@ -43,11 +42,7 @@ st.markdown(
 )
 
 # Input for the kid's answer
-with st.form(key="answer_form"):
-    st.session_state.user_answer = st.text_input(
-        "Enter your answer:", value=st.session_state.user_answer
-    )
-    submit_button = st.form_submit_button("Submit")
+user_answer = st.text_input("Enter your answer:", st.session_state.user_answer)
 
 # Check the answer
 if st.button("Submit"):
@@ -66,5 +61,5 @@ st.markdown(
 )
 
 # Button to continue to the next problem
-if st.session_state.feedback == "Well done! 🎉" and st.button("Next!"):
+if st.session_state.feedback == "Well done! 🎉" and st.button("Next Problem"):
     generate_new_problem()
